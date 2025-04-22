@@ -18,10 +18,16 @@ interface CoinTableProps {
 const CoinTable = ({ coins, isLoading, onPageChange, currentPage, hasNextPage }: CoinTableProps) => {
   const { sortConfig, requestSort, getSortIndicator } = useSort("rank");
   const [sortedCoins, setSortedCoins] = useState<Coin[]>(coins);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    setSortedCoins(sortCoins(coins, sortConfig));
-  }, [coins, sortConfig]);
+    const filteredCoins = coins.filter(
+      (coin) =>
+        coin.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        coin.symbol.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setSortedCoins(sortCoins(filteredCoins, sortConfig));
+  }, [coins, sortConfig, searchQuery]);
 
   if (isLoading) {
     return (
@@ -33,6 +39,15 @@ const CoinTable = ({ coins, isLoading, onPageChange, currentPage, hasNextPage }:
 
   return (
     <div>
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Search by name or symbol..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
       <div className="overflow-x-auto">
         <table className="coin-table w-full border-collapse">
           <thead>
