@@ -37,8 +37,8 @@ const CoinChart = ({ data, isLoading }: CoinChartProps) => {
           <XAxis dataKey="time" tickFormatter={(time) => time} />
           <YAxis domain={["auto", "auto"]} tickFormatter={(value) => formatPrice(value).replace("$", "")} />
           <Tooltip
-            formatter={(value: number) => [formatPrice(value), "Цена"]}
-            labelFormatter={(label) => `Дата: ${label}`}
+            formatter={(value: number) => [formatPrice(value), "Price"]}
+            labelFormatter={(label) => `Date: ${label}`}
           />
           <Line type="monotone" dataKey="price" stroke="#3b82f6" strokeWidth={2} dot={false} activeDot={{ r: 6 }} />
         </LineChart>

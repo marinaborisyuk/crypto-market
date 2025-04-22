@@ -1,8 +1,6 @@
 import axios from "axios";
 import type { Coin, CoinHistory } from "@/shared/types";
 
-// const API_KEY = "6cb353e7693cf5840a44f761acdbc208c28ac31e4ca2ef35ee586f8337850bcb";
-
 const api = axios.create({
   baseURL: import.meta.env.VITE_COINCAP_BASE_URL,
   params: {
