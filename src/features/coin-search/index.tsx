@@ -8,7 +8,7 @@ interface CoinSearchProps {
   onSearch: (query: string) => void;
 }
 
-const CoinSearch = ({ onSearch }: CoinSearchProps) => {
+export const CoinSearch = ({ onSearch }: CoinSearchProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("search") || "");
 
@@ -39,5 +39,3 @@ const CoinSearch = ({ onSearch }: CoinSearchProps) => {
     </div>
   );
 };
-
-export default CoinSearch;

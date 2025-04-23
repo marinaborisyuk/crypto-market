@@ -6,7 +6,8 @@ import { formatPrice, formatMarketCap, formatPercentage } from "@/shared/utils/f
 import { useSort } from "@/shared/hooks/useSort";
 import { sortCoins } from "@/shared/utils/sort";
 import { Pagination } from "@/features/pagination";
-import CoinSearch from "@/features/coin-search";
+import { CoinSearch } from "@/features/coin-search";
+import { DotsLoader } from "@/shared/ui/loader";
 
 interface CoinTableProps {
   coins: Coin[];
@@ -31,24 +32,13 @@ const CoinTable = ({ coins, isLoading, onPageChange, currentPage, hasNextPage }:
   }, [coins, sortConfig, searchQuery]);
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center py-10">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
+    return <DotsLoader />
   }
 
   return (
     <div>
       <div className="mb-4">
-				<CoinSearch onSearch={setSearchQuery}/>
-        {/* <input
-          type="text"
-          placeholder="Search by name or symbol..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        /> */}
+				<CoinSearch onSearch={setSearchQuery} />
       </div>
       <div className="overflow-x-auto">
         <table className="coin-table w-full border-collapse">
