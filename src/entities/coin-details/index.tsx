@@ -1,5 +1,5 @@
 import type { Coin } from "@/shared/types";
-import { formatPrice, formatMarketCap, formatPercentage } from "@/shared/lib/format";
+import { formatPrice, formatMarketCap, formatPercentage } from "@/shared/utils/format";
 
 interface CoinDetailsProps {
   coin: Coin;

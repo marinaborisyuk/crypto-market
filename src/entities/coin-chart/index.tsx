@@ -1,6 +1,6 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import type { CoinHistory } from "@/shared/types";
-import { formatPrice } from "@/shared/lib/format";
+import { formatPrice } from "@/shared/utils/format";
 
 interface CoinChartProps {
   data: CoinHistory[];

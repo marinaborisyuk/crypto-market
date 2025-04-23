@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { nanoid } from "nanoid";
 import type { Coin } from "@/shared/types";
-import { formatPrice, formatMarketCap, formatPercentage } from "@/shared/lib/format";
+import { formatPrice, formatMarketCap, formatPercentage } from "@/shared/utils/format";
 import { useSort } from "@/shared/hooks/useSort";
 import { sortCoins } from "@/shared/utils/sort";
 import { Pagination } from "@/features/pagination";
