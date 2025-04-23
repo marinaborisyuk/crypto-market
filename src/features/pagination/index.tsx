@@ -1,5 +1,3 @@
-import { nanoid } from "nanoid";
-
 interface PaginationProps {
   currentPage: number;
   hasNextPage: boolean;
@@ -12,7 +10,6 @@ export const Pagination = ({ currentPage, hasNextPage, onPageChange }: Paginatio
   return (
     <div className="flex justify-center items-center space-x-4 mt-6">
       <button
-        key={nanoid()}
         onClick={() => onPageChange(currentPage - 1)}
         disabled={isFirstPage}
         className={`px-4 py-2 cursor-pointer ${
@@ -25,7 +22,6 @@ export const Pagination = ({ currentPage, hasNextPage, onPageChange }: Paginatio
       </button>
       <span className="text-gray-600">Page {currentPage}</span>
       <button
-        key={nanoid()}
         onClick={() => onPageChange(currentPage + 1)}
         disabled={!hasNextPage}
         className={`px-4 py-2 cursor-pointer ${
