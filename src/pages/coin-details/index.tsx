@@ -12,13 +12,9 @@ const CoinDetailsPage = () => {
     return <div>Loading...</div>;
   }
 
-  if (!coin) {
-    return <div>Coin not found</div>;
-  }
-
   return (
     <div className="container mx-auto px-4 py-8">
-      <CoinDetails coin={coin} />
+      {coin && <CoinDetails coin={coin} />}
       {history && <CoinHistoryChart history={history} />}
     </div>
   );
