@@ -1,7 +1,7 @@
 import { Coin } from "@/shared/types";
 import { ReactNode } from "react";
 
-interface CoinTableHeadProps {
+interface CoinHeadProps {
   requestSort: (key: keyof Coin) => void;
   getSortIndicator: (key: keyof Coin) => ReactNode;
 }
@@ -20,7 +20,7 @@ const COIN_TABLE_COLUMNS: Column[] = [
   { key: "changePercent24Hr", label: "Change (24h)" },
 ];
 
-export const CoinTableHead = ({ requestSort, getSortIndicator }: CoinTableHeadProps) => {
+export const CoinHead = ({ requestSort, getSortIndicator }: CoinHeadProps) => {
 	return (
     <thead>
       <tr className="bg-gray-100">
