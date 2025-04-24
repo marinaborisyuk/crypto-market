@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { nanoid } from "nanoid";
 import type { Coin } from "@/shared/types";
 import { formatPrice, formatMarketCap, formatPercentage } from "@/shared/utils/format";
 import { useSort } from "@/shared/hooks/useSort";
-import { sortCoins } from "@/shared/utils/sort";
 import { Pagination } from "@/features/pagination";
 import { CoinSearch } from "@/features/coin-search";
 import { DotsLoader } from "@/shared/ui/loader";
+import { CoinTableHead } from "./ui/CoinTableHead";
+import { useFilteredAndSortedCoins } from '../../shared/hooks/useFilterAndSortedCoins';
 
 interface CoinTableProps {
   coins: Coin[];
@@ -19,17 +20,9 @@ interface CoinTableProps {
 
 const CoinTable = ({ coins, isLoading, onPageChange, currentPage, hasNextPage }: CoinTableProps) => {
   const { sortConfig, requestSort, getSortIndicator } = useSort("rank");
-  const [sortedCoins, setSortedCoins] = useState<Coin[]>(coins);
   const [searchQuery, setSearchQuery] = useState("");
 
-  useEffect(() => {
-    const filteredCoins = coins.filter(
-      (coin) =>
-        coin.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        coin.symbol.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setSortedCoins(sortCoins(filteredCoins, sortConfig));
-  }, [coins, sortConfig, searchQuery]);
+  const sortedCoins = useFilteredAndSortedCoins(coins, sortConfig, searchQuery);
 
   if (isLoading) {
     return <DotsLoader />
@@ -42,28 +35,7 @@ const CoinTable = ({ coins, isLoading, onPageChange, currentPage, hasNextPage }:
       </div>
       <div className="overflow-x-auto">
         <table className="coin-table w-full border-collapse">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="p-3 text-left" onClick={() => requestSort("rank")}>
-                Rank{getSortIndicator("rank")}
-              </th>
-              <th className="p-3 text-left" onClick={() => requestSort("name")}>
-                Name{getSortIndicator("name")}
-              </th>
-              <th className="p-3 text-right" onClick={() => requestSort("priceUsd")}>
-                Price{getSortIndicator("priceUsd")}
-              </th>
-              <th className="p-3 text-right" onClick={() => requestSort("marketCapUsd")}>
-                Market Cap{getSortIndicator("marketCapUsd")}
-              </th>
-              <th className="p-3 text-right" onClick={() => requestSort("volumeUsd24Hr")}>
-                Volume (24h){getSortIndicator("volumeUsd24Hr")}
-              </th>
-              <th className="p-3 text-right" onClick={() => requestSort("changePercent24Hr")}>
-                Change (24h){getSortIndicator("changePercent24Hr")}
-              </th>
-            </tr>
-          </thead>
+          <CoinTableHead requestSort={requestSort} getSortIndicator={getSortIndicator}/>
           <tbody>
             {sortedCoins.map((coin) => (
               <tr key={nanoid()} className="border-b hover:bg-gray-50">
