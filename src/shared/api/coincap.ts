@@ -8,7 +8,7 @@ const api = axios.create({
   }
 });
 
-export const getCoins = async (limit = 20, offset = 0, search = ""): Promise<{ data: Coin[]; timestamp: number }> => {
+export const getCoins = async (limit = 20, offset = 0, search = ""): Promise<Coin[]> => {
   const params: Record<string, string | number> = {
     limit,
     offset,
@@ -19,11 +19,7 @@ export const getCoins = async (limit = 20, offset = 0, search = ""): Promise<{ d
   }
 
   const response = await api.get("/assets", { params });
-	
-  return {
-    data: response.data.data,
-    timestamp: response.data.timestamp,
-  };
+  return response.data.data;
 };
 
 export const getCoinById = async (id: string): Promise<Coin> => {

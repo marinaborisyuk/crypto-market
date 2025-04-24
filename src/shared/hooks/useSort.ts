@@ -1,27 +1,33 @@
-import { useState, useCallback } from "react";
-import type { SortConfig } from "@/shared/types";
-import type { Coin } from "@/shared/types";
+import { useState, useMemo } from "react";
 
-export const useSort = (initialKey: keyof Coin, initialDirection: "asc" | "desc" = "asc") => {
-  const [sortConfig, setSortConfig] = useState<SortConfig>({
-    key: initialKey,
-    direction: initialDirection,
+export const useSort = <T>(data: T[], defaultKey: keyof T) => {
+  const [sortConfig, setSortConfig] = useState<{ key: keyof T; direction: "asc" | "desc" }>({
+    key: defaultKey,
+    direction: "asc",
   });
 
-  const requestSort = useCallback((key: keyof Coin) => {
-    setSortConfig((prevConfig) => ({
+  const sortedData = useMemo(() => {
+    if (!data) return [];
+    const sorted = [...data].sort((a, b) => {
+      const aValue = a[sortConfig.key];
+      const bValue = b[sortConfig.key];
+
+      const aNumber = typeof aValue === "string" && !isNaN(Number(aValue)) ? Number(aValue) : aValue;
+      const bNumber = typeof bValue === "string" && !isNaN(Number(bValue)) ? Number(bValue) : bValue;
+
+      if (aNumber < bNumber) return sortConfig.direction === "asc" ? -1 : 1;
+      if (aNumber > bNumber) return sortConfig.direction === "asc" ? 1 : -1;
+      return 0;
+    });
+    return sorted;
+  }, [data, sortConfig]);
+
+  const requestSort = (key: keyof T) => {
+    setSortConfig((prev) => ({
       key,
-      direction: prevConfig.key === key && prevConfig.direction === "asc" ? "desc" : "asc",
+      direction: prev.key === key && prev.direction === "asc" ? "desc" : "asc",
     }));
-  }, []);
+  };
 
-  const getSortIndicator = useCallback(
-    (key: keyof Coin) => {
-      if (sortConfig.key !== key) return null;
-      return sortConfig.direction === "asc" ? " ↑" : " ↓";
-    },
-    [sortConfig]
-  );
-
-  return { sortConfig, requestSort, getSortIndicator };
-}; 
+  return { sortedData, requestSort, sortConfig };
+};

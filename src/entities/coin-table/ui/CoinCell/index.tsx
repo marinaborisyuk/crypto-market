@@ -11,7 +11,7 @@ interface CoinCellProps {
 export const CoinCell = ({ value, formatType = 'default', className, children }: CoinCellProps) => {
   const getFormattedValue = () => {
     if (children) return children;
-    if (value === undefined) return null;
+    if (value === undefined || value === null) return null;
 
     switch (formatType) {
       case 'price': 

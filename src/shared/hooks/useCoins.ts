@@ -11,7 +11,7 @@ interface UseCoinsQueryProps {
 export const useCoinsQuery = ({ page, search = DEFAULT_SEARCH }: UseCoinsQueryProps) => {
   const offset = (page - 1) * COINS_PER_PAGE;
 
-  return useQuery<{ data: Coin[]; timestamp: number }>({
+  return useQuery<Coin[]>({
     queryKey: ["coins", page, search],
     queryFn: () => getCoins(COINS_PER_PAGE, offset, search),
     refetchInterval: REFETCH_INTERVAL,
