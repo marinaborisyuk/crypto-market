@@ -23,14 +23,21 @@ const HomePage = () => {
       if (currentPage === 1) {
         setAllCoins(coins);
       } else {
-        setAllCoins(prev => [...prev, ...coins]);
+        setAllCoins(prev => {
+          const newCoins = coins.filter(
+            coin => !prev.some(prevCoin => prevCoin.id === coin.id)
+          );
+          return [...prev, ...newCoins];
+        });
       }
     }
   }, [coins, currentPage]);
 
   useEffect(() => {
     setCurrentPage(1);
-    setAllCoins([]);
+    if (searchQuery) {
+      setAllCoins([]);
+    }
   }, [searchQuery]);
 
   const handleLoadMore = () => {
