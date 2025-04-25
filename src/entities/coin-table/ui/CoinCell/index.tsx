@@ -26,7 +26,7 @@ export const CoinCell = ({ value, formatType = 'default', className, children }:
   };
 
   return (
-    <td className={`p-3 text-center ${className}`}>
+    <td className={`p-3 text-left ${className}`}>
       {getFormattedValue()}
     </td>
   );

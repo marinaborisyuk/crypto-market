@@ -21,20 +21,22 @@ const CoinTable = ({ coins, isLoading, onPageChange, currentPage, hasNextPage, o
 
   return (
     <div>
-      <div className="overflow-x-auto">
-        <table className="coin-table w-full border-collapse">
-          <CoinHead
-            requestSort={onSortChange}
-            getSortIndicator={(key) =>
-              sortConfig.key === key ? (sortConfig.direction === "asc" ? "↑" : "↓") : null
-            }
-          />
-          <tbody>
-            {coins.map((coin) => (
-              <CoinRow key={coin.id} coin={coin} />
-            ))}
-          </tbody>
-        </table>
+      <div className="relative rounded-lg border border-gray-200">
+        <div className="max-h-[600px] overflow-y-auto">
+          <table className="w-full">
+            <CoinHead
+              requestSort={onSortChange}
+              getSortIndicator={(key) =>
+                sortConfig.key === key ? (sortConfig.direction === "asc" ? "↑" : "↓") : null
+              }
+            />
+            <tbody className="divide-y divide-gray-200 bg-white">
+              {coins.map((coin) => (
+                <CoinRow key={coin.id} coin={coin} />
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       <Pagination
         currentPage={currentPage}

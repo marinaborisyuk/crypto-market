@@ -22,19 +22,21 @@ const COIN_TABLE_COLUMNS: Column[] = [
 
 export const CoinHead = ({ requestSort, getSortIndicator }: CoinHeadProps) => {
 	return (
-    <thead>
-      <tr className="bg-gray-100">
-        {COIN_TABLE_COLUMNS.map((column) => (
-          <th
-            key={column.key}
-            className='p-3 cursor-pointer'
-            onClick={() => requestSort(column.key)}
-          >
-            {column.label}
-            {getSortIndicator(column.key)}
-          </th>
-        ))}
-      </tr>
+    <thead className="sticky top-0 bg-gray-100 shadow-sm">
+      <tr>
+      {COIN_TABLE_COLUMNS.map((column) => (
+        <th
+          key={column.key}
+          className="p-4 font-semibold text-left cursor-pointer hover:bg-gray-200 transition-colors"
+          onClick={() => requestSort(column.key)}
+        >
+          <div className="flex items-center space-x-1">
+            <span>{column.label}</span>
+            <span>{getSortIndicator(column.key)}</span>
+          </div>
+        </th>
+      ))}
+    </tr>
     </thead>
 	);
 }
